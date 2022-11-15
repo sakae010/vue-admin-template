@@ -2,7 +2,6 @@
   "name": "vue-admin-template",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "commit": "czg",
@@ -15,14 +14,21 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@vueuse/core": "^9.5.0",
     "ant-design-vue": "^3.2.13",
+    "crypto-js": "^4.1.1",
+    "dayjs": "^1.11.6",
+    "lodash-es": "^4.17.21",
     "pinia": "^2.0.23",
     "vue": "^3.2.41",
+    "vue-i18n": "^9.2.2",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.2.0",
     "@commitlint/config-conventional": "^17.2.0",
+    "@types/crypto-js": "^4.1.1",
+    "@types/lodash-es": "^4.17.6",
     "@types/node": "^18.11.9",
     "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.42.0",

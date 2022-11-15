@@ -7,10 +7,12 @@ declare module '*.vue' {
 }
 
 interface ImportMetaEnv {
-  readonly VITE_APP_TITLE: string;
+  readonly VITE_GLOB_APP_TITLE: string;
   readonly VITE_PORT: number;
   readonly VITE_PUBLIC_PATH: string;
   readonly VITE_DROP_CONSOLE: boolean;
+  readonly VITE_GLOB_APP_SHORT_NAME: string;
+  readonly VITE_GLOB_API_URL: string;
 }
 
 interface ImportMeta {
