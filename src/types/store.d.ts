@@ -29,3 +29,10 @@ export interface ErrorLogInfo {
   // Error time
   time?: string;
 }
+
+export interface BeforeMiniState {
+  menuCollapsed?: boolean;
+  menuSplit?: boolean;
+  menuMode?: MenuModeEnum;
+  menuType?: MenuTypeEnum;
+}

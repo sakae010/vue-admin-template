@@ -4,6 +4,8 @@ import { UserInfo } from '@/types/store';
 import { getAuthCache, setAuthCache } from '@/utils/auth';
 import { defineStore } from 'pinia';
 import { store } from '@/store';
+import { router } from '@/router';
+import { PageEnum } from '@/enums/pageEnum';
 
 interface UserState {
   userInfo: Nullable<UserInfo>;
@@ -50,6 +52,9 @@ export const useUserStore = defineStore('app-user', {
       this.lastUpdateTime = new Date().getTime();
       setAuthCache(USER_INFO_KEY, info);
     },
+    setSessionTimeout(flag: boolean) {
+      this.sessionTimeout = flag;
+    },
     // async afterLoginAction(goHome?: boolean): Promise<UserInfo | null> {
     //   if (!this.getToken) return null;
     //   // return userInfo;
@@ -57,6 +62,22 @@ export const useUserStore = defineStore('app-user', {
     // async getUserInfoAction(): Promise<UserInfo | null> {
     //   if (!this.getToken) return null;
     // },
+    /**
+     * @description: logout
+     */
+    async logout(goLogin = false) {
+      if (this.getToken) {
+        try {
+          // await doLogout();
+        } catch {
+          console.log('注销Token失败');
+        }
+      }
+      this.setToken(undefined);
+      this.setSessionTimeout(false);
+      this.setUserInfo(null);
+      goLogin && router.push(PageEnum.BASE_LOGIN);
+    },
   },
 });
 

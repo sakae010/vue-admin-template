@@ -2,6 +2,8 @@ import { ErrorLogInfo } from '@/types/store';
 import { formatToDateTime } from '@/utils/date';
 import { defineStore } from 'pinia';
 import { store } from '@/store';
+import projectSetting from '@/settings/projectSetting';
+import { ErrorTypeEnum } from '@/enums/exceptionEnum';
 
 export interface ErrorLogState {
   errorLogInfoList: Nullable<ErrorLogInfo[]>;
@@ -29,6 +31,36 @@ export const useErrorLogStore = defineStore('app-error-log', {
       };
       this.errorLogInfoList = [item, ...(this.errorLogInfoList || [])];
       this.errorLogListCount += 1;
+    },
+    setErrorLogListCount(count: number): void {
+      this.errorLogListCount = count;
+    },
+    /**
+     * Triggered after ajax request error
+     * @param error
+     * @returns
+     */
+    addAjaxErrorInfo(error) {
+      const { useErrorHandle } = projectSetting;
+      if (!useErrorHandle) {
+        return;
+      }
+      const errInfo: Partial<ErrorLogInfo> = {
+        message: error.message,
+        type: ErrorTypeEnum.AJAX,
+      };
+      if (error.response) {
+        const {
+          config: { url = '', data: params = '', method = 'get', headers = {} } = {},
+          data = {},
+        } = error.response;
+        errInfo.url = url;
+        errInfo.name = 'Ajax Error!';
+        errInfo.file = '-';
+        errInfo.stack = JSON.stringify(data);
+        errInfo.detail = JSON.stringify({ params, method, headers });
+      }
+      this.addErrorLogInfo(errInfo as ErrorLogInfo);
     },
   },
 });
